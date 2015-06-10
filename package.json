@@ -11,7 +11,10 @@
   },
   "author": "Boshen",
   "dependencies": {
-    "react": "^0.13.3"
+    "firebase": "^2.2.7",
+    "lodash": "^3.9.3",
+    "react": "^0.13.3",
+    "reactfire": "^0.4.0"
   },
   "devDependencies": {
     "browser-sync": "^2.7.6",
@@ -24,7 +27,7 @@
   "jest": {
     "scriptPreprocessor": "preprocessor.js",
     "unmockedModulePathPatterns": [
-      "react"
+      "node_modules/react"
     ],
     "testFileExtensions": [
       "coffee",
