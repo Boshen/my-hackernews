@@ -1,7 +1,7 @@
 jest.dontMock '../main.coffee'
 
 describe 'main', ->
-  React = require('react/addons')
+  React = require 'react/addons'
   TestUtils = React.addons.TestUtils
   Main = require '../main.coffee'
 
@@ -16,7 +16,7 @@ describe 'main', ->
 
   beforeEach ->
     main = TestUtils.renderIntoDocument React.createElement(Main, null)
-    main.setState items: items
+    #main.setState items: items
 
   #it 'should exists', ->
     #expect(TestUtils.isCompositeComponent(main)).toBeTruthy()
