@@ -7,7 +7,7 @@
   "scripts": {
     "start": "watchify -t coffeeify -o bundle.js -v -d src/app.coffee",
     "sync": "browser-sync start --server --no-open --files bundle.js",
-    "test": "watch jest ."
+    "test": "watch jest src -d"
   },
   "author": "Boshen",
   "dependencies": {
