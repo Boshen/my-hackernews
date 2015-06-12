@@ -12,17 +12,27 @@ CHANGE_EVENT = 'change'
 _items = []
 
 update = (snapshot) ->
-  _items = _.values(snapshot.exportVal())
-  Store.emitChange()
+  snapshot.forEach (idRef) ->
+    id = idRef.val()
+    console.log id
+    api.child('item/' + id).once 'value', (itemSnapShot) ->
+      _items.push itemSnapShot.val()
+      Store.emitChange()
+
+
 
 Store = _.assign {}, EventEmitter.prototype,
   getItems: ->
-    _items
+    console.log _items
+    _(_items)
+      .sortBy (item) ->
+        if item.kids then -item.kids.length else 0
+      .value()
 
   start: ->
     if not firebaseRef?
-      firebaseRef = api.child('topstories')
-      firebaseRef.on('value', update)
+      firebaseRef = api.child('topstories').limitToFirst(10)
+      firebaseRef.once('value', update)
 
   emitChange: ->
     @emit(CHANGE_EVENT)

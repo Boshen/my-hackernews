@@ -20,8 +20,8 @@ Main = React.createClass
 
 
   render: ->
-    items = _.mapValues @state.items, (id) ->
-      React.createElement('li', null, id)
+    items = _.mapValues @state.items, (item) ->
+      React.createElement('li', null, item.kids?.length + ' ' + item.score + ' ' + item.title)
 
     React.createElement('ul', null, items)
 
