@@ -1,29 +1,32 @@
 React = require 'react'
-Firebase = require 'firebase'
-ReactFireMixin = require 'reactfire'
 _ = require 'lodash'
+Store = require '../stores/Store.coffee'
 
-
-api = 'https://hacker-news.firebaseio.com/v0'
+getItems = ->
+  items: Store.getItems()
 
 Main = React.createClass
-  mixins: [ReactFireMixin]
-
   getInitialState: ->
-    items: {}
+    getItems()
 
   componentWillMount: ->
-    firebaseRef = new Firebase(api + '/topstories')
-    this.bindAsObject(firebaseRef, "items")
+    Store.start()
+
+  componentDidMount: ->
+    Store.addChangeListener(@._onChange)
 
   componentWillUnmount: ->
-    this.unbind("items")
+    Store.removeChangeListener(@._onChange)
+
 
   render: ->
-
-    items = _.mapValues @state.items, (id)->
+    items = _.mapValues @state.items, (id) ->
       React.createElement('li', null, id)
 
     React.createElement('ul', null, items)
+
+  _onChange: ->
+    @setState(getItems())
+
 
 module.exports = Main
