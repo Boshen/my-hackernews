@@ -1,0 +1,12 @@
+li {
+  display: flex;
+  padding: 5px;
+}
+
+li span {
+  flex: 1;
+}
+
+li a {
+  flex: 5;
+}

@@ -1,19 +1,18 @@
 React = require 'react'
 PureRenderMixin = require('react/addons').addons.PureRenderMixin
-List = require('immutable').List
+Immutable = require('immutable')
 _ = require 'lodash'
+
+ListItem = require './ListItem.coffee'
 
 List = React.createClass
   mixins: [PureRenderMixin]
 
   propTypes:
-    items: React.PropTypes.instanceOf(List).isRequired
+    items: React.PropTypes.instanceOf(Immutable.List).isRequired
 
   render: ->
-    items = @props.items.map (item) ->
-      comments = if item.kids then item.kids.length else 0
-      React.createElement('li', {key: item.id}, comments + ' ' + item.score + ' ' + item.title)
-
-    React.createElement('ul', null, items)
+    React.createElement 'ol', null, @props.items.map (item) ->
+      React.createElement ListItem, {key: item.id, item: item}, null
 
 module.exports = List
