@@ -1,6 +1,7 @@
 React = require 'react'
 _ = require 'lodash'
 Store = require '../stores/Store.coffee'
+List = require './List.coffee'
 
 getItems = ->
   items: Store.getItems()
@@ -9,8 +10,8 @@ Main = React.createClass
   getInitialState: ->
     getItems()
 
-  componentWillMount: ->
-    Store.start()
+  #componentWillMount: ->
+    #Store.start()
 
   componentDidMount: ->
     Store.addChangeListener(@._onChange)
@@ -18,12 +19,8 @@ Main = React.createClass
   componentWillUnmount: ->
     Store.removeChangeListener(@._onChange)
 
-
   render: ->
-    items = _.mapValues @state.items, (item) ->
-      React.createElement('li', null, item.kids?.length + ' ' + item.score + ' ' + item.title)
-
-    React.createElement('ul', null, items)
+    React.createElement(List, {items: @state.items})
 
   _onChange: ->
     @setState(getItems())
