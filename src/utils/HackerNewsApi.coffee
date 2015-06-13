@@ -14,6 +14,7 @@ module.exports =
 
   getItems: ->
     firebaseRef.on 'value', (snapshot) ->
+      console.log 'getItems', snapshot.val()
       Actions.receiveIds snapshot.val()
 
   getItem: (id)->

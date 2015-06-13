@@ -1,4 +1,5 @@
 EventEmitter = require('events').EventEmitter
+Map = require('immutable').Map
 _ = require 'lodash'
 
 Dispatcher = require '../dispatcher/Dispatcher.coffee'
@@ -7,33 +8,25 @@ HackerNewsApi = require '../utils/HackerNewsApi.coffee'
 
 CHANGE_EVENT = 'change'
 
-_ids = []
-_items = {}
+_items = new Map()
 
 updateIds = (ids) ->
-  idsToUpdate = []
-  if _ids.length is 0
-    _ids = ids
-    idsToUpdate = idsToUpdate.concat(ids)
-  else
-    _.each ids, (id, idx) ->
-      if _ids[idx] isnt id
-        idsToUpdate = idsToUpdate.concat(id)
-
-  _.each idsToUpdate, (id)->
+  _.each ids, (id) ->
     HackerNewsApi.getItem(id)
 
 updateItem = (item) ->
-  _items[item.id] = item
+  _items = _items.set item.id, item
 
 
 Store = _.assign {}, EventEmitter.prototype,
   getItems: ->
-    _(_items)
-      .toArray()
-      .sortBy (item) ->
-        if item.kids then -item.kids.length else 0
-      .value()
+    _items.toList().sort (itemA, itemB) ->
+      if not itemA.kids or not itemB.kids or itemA.kids.length == itemB.kids.length
+        0
+      else if itemA.kids.length < itemB.kids.length
+        1
+      else
+        -1
 
   emitChange: ->
     @emit(CHANGE_EVENT)
