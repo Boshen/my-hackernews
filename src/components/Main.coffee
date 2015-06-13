@@ -10,9 +10,6 @@ Main = React.createClass
   getInitialState: ->
     getItems()
 
-  #componentWillMount: ->
-    #Store.start()
-
   componentDidMount: ->
     Store.addChangeListener(@._onChange)
 
