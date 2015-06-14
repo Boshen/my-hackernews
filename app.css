@@ -7,6 +7,6 @@ li span {
   flex: 1;
 }
 
-li a {
+li span:last-child {
   flex: 5;
 }

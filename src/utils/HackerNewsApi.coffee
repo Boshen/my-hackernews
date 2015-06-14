@@ -6,18 +6,22 @@ api = new Firebase('https://hacker-news.firebaseio.com/v0')
 
 firebaseRef = null
 
-module.exports =
+HackerNewsApi =
   init: ->
     if not firebaseRef?
       firebaseRef = api.child('topstories').limitToFirst(10)
-    @getItems()
+    @getIds()
 
-  getItems: ->
+  getIds: ->
     firebaseRef.on 'value', (snapshot) ->
-      console.log 'getItems', snapshot.val()
-      Actions.receiveIds snapshot.val()
+      ids = snapshot.val()
+      console.log 'update ids', ids
+      ids.forEach (id)->
+        HackerNewsApi.getItem(id)
 
   getItem: (id)->
     api.child('item/' + id).once 'value', (snapshot) ->
       Actions.receiveItem snapshot.val()
 
+
+module.exports = HackerNewsApi
