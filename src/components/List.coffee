@@ -1,7 +1,6 @@
 React = require 'react'
 PureRenderMixin = require('react/addons').addons.PureRenderMixin
-Immutable = require('immutable')
-_ = require 'lodash'
+Immutable = require 'immutable'
 
 ListItem = require './ListItem.coffee'
 

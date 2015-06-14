@@ -1,11 +1,12 @@
 React = require 'react'
 PureRenderMixin = require('react/addons').addons.PureRenderMixin
+Immutable = require 'immutable'
 
 ListItem = React.createClass
   mixins: [PureRenderMixin]
 
   propTypes:
-    item: React.PropTypes.object.isRequired
+    item: React.PropTypes.instanceOf(Immutable.Map).isRequired
 
   render: ->
     item = @props.item

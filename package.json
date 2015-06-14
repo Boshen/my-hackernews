@@ -28,7 +28,7 @@
   "jest": {
     "scriptPreprocessor": "preprocessor.js",
     "unmockedModulePathPatterns": [
-      "node_modules/react"
+      "node_modules"
     ],
     "testFileExtensions": [
       "coffee",

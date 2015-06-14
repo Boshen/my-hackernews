@@ -1,11 +1,10 @@
 Dispatcher = require '../dispatcher/Dispatcher.coffee'
 Constants = require '../constants/Constants.coffee'
-HackerNewsApi = require '../utils/HackerNewsApi.coffee'
 
 Actions =
-  receiveItem: (item) ->
+  createItem: (item) ->
     Dispatcher.dispatch {
-      type: Constants.api.GET_ITEM
+      type: Constants.CREATE_ITEM
       item: item
     }
 

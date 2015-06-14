@@ -1,3 +1,2 @@
 module.exports =
-  api:
-    GET_ITEM: 'GET_ITEM'
+  CREATE_ITEM: 'CREATE_ITEM'

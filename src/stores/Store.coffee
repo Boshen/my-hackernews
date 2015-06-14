@@ -1,5 +1,5 @@
 EventEmitter = require('events').EventEmitter
-Map = require('immutable').Map
+Immutable = require('immutable')
 _ = require 'lodash'
 
 Dispatcher = require '../dispatcher/Dispatcher.coffee'
@@ -7,10 +7,10 @@ Constants = require '../constants/Constants.coffee'
 
 CHANGE_EVENT = 'change'
 
-_items = new Map()
+_items = new Immutable.Map()
 
 updateItem = (item) ->
-  _items = _items.set(item.id, new Map(item))
+  _items = _items.set(item.id, new Immutable.Map(item))
 
 Store = _.assign {}, EventEmitter.prototype,
   getItems: ->
@@ -31,7 +31,7 @@ Store = _.assign {}, EventEmitter.prototype,
 Dispatcher.register (payload) ->
   switch payload.type
 
-    when Constants.api.GET_ITEM
+    when Constants.CREATE_ITEM
       updateItem(payload.item)
       Store.emitChange()
 

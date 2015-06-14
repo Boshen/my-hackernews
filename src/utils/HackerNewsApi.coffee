@@ -19,6 +19,6 @@ HackerNewsApi =
   get: (id)->
     api.child('item/' + id).once 'value', (snapshot) ->
       item = snapshot.val()
-      Actions.receiveItem item if item
+      Actions.createItem item if item
 
 module.exports = HackerNewsApi
