@@ -11,16 +11,15 @@ Main = React.createClass
     getItems()
 
   componentDidMount: ->
-    Store.addChangeListener(@._onChange)
+    Store.addChangeListener @_onChange
 
   componentWillUnmount: ->
-    Store.removeChangeListener(@._onChange)
+    Store.removeChangeListener @_onChange
 
   render: ->
-    React.createElement(List, {items: @state.items})
+    React.createElement List, {items: @state.items}
 
   _onChange: ->
-    @setState(getItems())
-
+    @setState getItems()
 
 module.exports = Main

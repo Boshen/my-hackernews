@@ -21,5 +21,4 @@ HackerNewsApi =
       item = snapshot.val()
       Actions.receiveItem item if item
 
-
 module.exports = HackerNewsApi

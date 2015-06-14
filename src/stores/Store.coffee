@@ -28,13 +28,11 @@ Store = _.assign {}, EventEmitter.prototype,
   removeChangeListener: (callback) ->
     @removeListener(CHANGE_EVENT, callback)
 
-
 Dispatcher.register (payload) ->
   switch payload.type
 
     when Constants.api.GET_ITEM
       updateItem(payload.item)
       Store.emitChange()
-
 
 module.exports = Store

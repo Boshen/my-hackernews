@@ -16,5 +16,4 @@ ListItem = React.createClass
       React.createElement 'span', null,
         React.createElement 'a', {href: item.get('url')}, item.get('title')
 
-
 module.exports = ListItem

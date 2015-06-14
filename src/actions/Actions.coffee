@@ -3,7 +3,7 @@ Constants = require '../constants/Constants.coffee'
 HackerNewsApi = require '../utils/HackerNewsApi.coffee'
 
 Actions =
-  receiveItem: (item)->
+  receiveItem: (item) ->
     Dispatcher.dispatch {
       type: Constants.api.GET_ITEM
       item: item
