@@ -4,24 +4,22 @@ Actions = require '../actions/Actions.coffee'
 
 api = new Firebase('https://hacker-news.firebaseio.com/v0')
 
-firebaseRef = null
-
 HackerNewsApi =
   init: ->
-    if not firebaseRef?
-      firebaseRef = api.child('topstories').limitToFirst(10)
-    @getIds()
+    @getAll api.child('topstories').limitToFirst(50)
+    @getAll api.child('newstories').limitToFirst(10)
 
-  getIds: ->
-    firebaseRef.on 'value', (snapshot) ->
-      ids = snapshot.val()
-      console.log 'update ids', ids
-      ids.forEach (id)->
-        HackerNewsApi.getItem(id)
+  getAll: (ref)->
+    ref.on 'child_changed', (snapshot) =>
+      @get snapshot.val()
 
-  getItem: (id)->
+    ref.on 'child_added', (snapshot) =>
+      @get snapshot.val()
+
+  get: (id)->
     api.child('item/' + id).once 'value', (snapshot) ->
-      Actions.receiveItem snapshot.val()
+      item = snapshot.val()
+      Actions.receiveItem item if item
 
 
 module.exports = HackerNewsApi

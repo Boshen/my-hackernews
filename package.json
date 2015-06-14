@@ -6,7 +6,7 @@
   "main": "src/app.coffee",
   "scripts": {
     "start": "watchify -t coffeeify -o bundle.js -v -d src/app.coffee",
-    "sync": "browser-sync start --server --no-open --files bundle.js",
+    "sync": "browser-sync start --server --no-open --no-notify --no-ui --files 'bundle.js, app.css'",
     "test": "watch jest src -d"
   },
   "author": "Boshen",

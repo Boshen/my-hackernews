@@ -13,6 +13,6 @@ List = React.createClass
 
   render: ->
     React.createElement 'ol', null, @props.items.map (item) ->
-      React.createElement ListItem, {key: item.id, item: item}, null
+      React.createElement ListItem, {key: item.get('id'), item: item}, null
 
 module.exports = List

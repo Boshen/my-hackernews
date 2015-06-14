@@ -10,17 +10,14 @@ CHANGE_EVENT = 'change'
 _items = new Map()
 
 updateItem = (item) ->
-  _items = _items.set item.id, item
+  _items = _items.set(item.id, new Map(item))
 
 Store = _.assign {}, EventEmitter.prototype,
   getItems: ->
     _items.toList().sort (itemA, itemB) ->
-      if itemA.descendants is itemB.descendants
-        0
-      else if itemA.descendants < itemB.descendants
-        1
-      else
-        -1
+      a = itemA.get('descendants') * itemA.get('score')
+      b = itemB.get('descendants') * itemB.get('score')
+      b - a
 
   emitChange: ->
     @emit(CHANGE_EVENT)
