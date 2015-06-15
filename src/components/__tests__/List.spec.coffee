@@ -22,7 +22,7 @@ describe 'List', ->
   it 'should exists', ->
     expect(TestUtils.isCompositeComponent(list)).toBeTruthy()
 
-  it 'should create an ordered list', ->
+  it 'should create an list', ->
     ol = TestUtils.findRenderedDOMComponentWithTag list, 'ol'
     expect(ol.getDOMNode().children.length).toBe 2
     expect(ListItem.mock.calls.length).toEqual 2

@@ -3,10 +3,11 @@ li {
   padding: 5px;
 }
 
-li span {
-  flex: 1;
+li span:first-child {
+  flex: 5;
 }
 
 li span:last-child {
-  flex: 5;
+  flex: 1;
+  text-align: center;
 }

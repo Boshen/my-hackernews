@@ -1,24 +1,30 @@
 Firebase = require 'firebase'
+Q = require 'q'
 
-Actions = require '../actions/Actions.coffee'
-
-api = new Firebase('https://hacker-news.firebaseio.com/v0')
+api = new Firebase 'https://hacker-news.firebaseio.com/v0'
 
 HackerNewsApi =
-  init: ->
-    @getAll api.child('topstories').limitToFirst(50)
-    @getAll api.child('newstories').limitToFirst(10)
+  getTopStories: (cb) ->
+    @getRef api.child('topstories').limitToFirst(50), cb
 
-  getAll: (ref)->
+  getNewStories: (cb) ->
+    @getRef api.child('newstories').limitToFirst(10), cb
+
+  getRef: (ref, cb) ->
     ref.on 'child_changed', (snapshot) =>
-      @get snapshot.val()
+      cb snapshot.val()
 
     ref.on 'child_added', (snapshot) =>
-      @get snapshot.val()
+      cb snapshot.val()
 
-  get: (id)->
+  get: (id) ->
+    deferred = Q.defer()
     api.child('item/' + id).once 'value', (snapshot) ->
       item = snapshot.val()
-      Actions.createItem item if item
+      if item
+        deferred.resolve item
+      else
+        deferred.reject()
+    deferred.promise
 
 module.exports = HackerNewsApi

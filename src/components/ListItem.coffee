@@ -2,6 +2,8 @@ React = require 'react'
 PureRenderMixin = require('react/addons').addons.PureRenderMixin
 Immutable = require 'immutable'
 
+Actions = require '../actions/Actions.coffee'
+
 ListItem = React.createClass
   mixins: [PureRenderMixin]
 
@@ -12,9 +14,11 @@ ListItem = React.createClass
     item = @props.item
 
     React.createElement 'li', null,
-      React.createElement 'span', null, item.get('descendants')
-      React.createElement 'span', null, item.get('score')
       React.createElement 'span', null,
         React.createElement 'a', {href: item.get('url')}, item.get('title')
+      React.createElement 'span', {onClick: @_clickComments}, item.get('descendants')
+
+  _clickComments: ->
+    Actions.clickComments @props.item.get('kids')
 
 module.exports = ListItem

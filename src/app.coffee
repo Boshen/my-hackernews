@@ -1,7 +1,7 @@
 React = require 'react'
 Main = require './components/Main.coffee'
-HackerNewsApi = require './utils/HackerNewsApi.coffee'
+Actions = require './actions/Actions.coffee'
 
-HackerNewsApi.init()
+Actions.init()
 
 React.render React.createElement(Main, null), document.getElementById('main')

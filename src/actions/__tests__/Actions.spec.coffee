@@ -2,14 +2,44 @@ jest.dontMock '../Actions.coffee'
 jest.dontMock '../../constants/Constants.coffee'
 
 describe 'Actions', ->
-  Dispatcher = require '../../dispatcher/Dispatcher.coffee'
-  Constants = require '../../constants/Constants.coffee'
-  Actions = require '../Actions.coffee'
+  Dispatcher = Constants = HackerNewsApi = Actions = null
 
-  it 'should create an item and dispatch it', ->
-    item = {id: 1}
-    Actions.createItem(item)
-    expect(Dispatcher.dispatch).toBeCalledWith {
-      type: Constants.CREATE_ITEM
-      item: item
-    }
+  beforeEach ->
+    Dispatcher = require '../../dispatcher/Dispatcher.coffee'
+    Constants = require '../../constants/Constants.coffee'
+    HackerNewsApi = require '../../utils/HackerNewsApi.coffee'
+    Actions = require '../Actions.coffee'
+
+  describe 'create item', ->
+    it 'should create an item and dispatch it', ->
+      item = {id: 1}
+      Actions.createItem(item)
+      expect(Dispatcher.dispatch).toBeCalledWith {
+        type: Constants.CREATE_ITEM
+        item: item
+      }
+
+  describe 'click comments', ->
+    it 'should fetch all comments', ->
+      Q = require 'q'
+
+      ids = [1, 2, 3]
+      comments = [ {id: 100}, {id: 101}, {id: 102} ]
+
+      HackerNewsApi.get.mockImplementation (id, i)->
+        Q.when comments[i]
+
+      Actions.clickComments(ids)
+
+      expect(HackerNewsApi.get.mock.calls.length).toBe ids.length
+      HackerNewsApi.get.mock.calls.forEach (call, i)->
+        expect(call[0]).toBe ids[i]
+
+      # TODO:
+      # How do I test Q?
+      #expect(Dispatcher.dispatch.mock.calls.length).toBe ids.length
+      #Dispatcher.dispatcher.mock.calls.forEach (call, i)->
+        #expect(call).toEqual {
+          #type: Constants.CREATE_COMMENT
+          #comment: comments[i]
+        #}

@@ -1,9 +1,9 @@
 jest.dontMock '../ListItem.coffee'
 
 describe 'ListItem', ->
-  Immutable = require 'immutable'
 
   React = require 'react/addons'
+  Immutable = require 'immutable'
   TestUtils = React.addons.TestUtils
   ListItem = null
 
@@ -18,20 +18,32 @@ describe 'ListItem', ->
       score: 3
       url: 'http://test.com'
       title: 'Story Title'
+      kids: [1, 2, 3]
     }
     listItem = TestUtils.renderIntoDocument React.createElement(ListItem, {item: item})
 
   it 'should exists', ->
     expect(TestUtils.isCompositeComponent(listItem)).toBeTruthy()
 
-  it 'should create a li with three spans', ->
+  it 'should create a li with two spans', ->
     li = TestUtils.findRenderedDOMComponentWithTag listItem, 'li'
     spans = TestUtils.scryRenderedDOMComponentsWithTag li, 'span'
-    expect(spans.length).toBe 3
+    expect(spans.length).toBe 2
 
-    expect(spans[0].getDOMNode().textContent).toBe item.get('descendants').toString()
-    expect(spans[1].getDOMNode().textContent).toBe item.get('score').toString()
+    a = TestUtils.findRenderedDOMComponentWithTag spans[0], 'a'
+    expect(React.findDOMNode(a).textContent).toBe item.get('title')
+    expect(React.findDOMNode(a).getAttribute('href')).toBe item.get('url')
 
-    a = TestUtils.findRenderedDOMComponentWithTag spans[2], 'a'
-    expect(a.getDOMNode().textContent).toBe item.get('title')
-    expect(a.getDOMNode().getAttribute('href')).toBe item.get('url')
+    expect(spans[1].getDOMNode().textContent).toBe item.get('descendants').toString()
+
+  it 'should get comments when the descendants span is clicked', ->
+    Actions = require '../../actions/Actions.coffee'
+    li = TestUtils.findRenderedDOMComponentWithTag listItem, 'li'
+    spans = TestUtils.scryRenderedDOMComponentsWithTag li, 'span'
+    comments = React.findDOMNode(spans[1])
+    TestUtils.Simulate.click(comments)
+    expect(Actions.clickComments).toBeCalledWith item.get('kids')
+
+
+
+
