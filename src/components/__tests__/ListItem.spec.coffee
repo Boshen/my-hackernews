@@ -7,7 +7,7 @@ describe 'ListItem', ->
   TestUtils = React.addons.TestUtils
   ListItem = null
 
-  item = listItem = null
+  item = element = null
 
   beforeEach ->
     ListItem = require '../ListItem.coffee'
@@ -20,13 +20,13 @@ describe 'ListItem', ->
       title: 'Story Title'
       kids: [1, 2, 3]
     }
-    listItem = TestUtils.renderIntoDocument React.createElement(ListItem, {item: item})
+    element = TestUtils.renderIntoDocument React.createElement(ListItem, {item: item})
 
   it 'should exists', ->
-    expect(TestUtils.isCompositeComponent(listItem)).toBeTruthy()
+    expect(TestUtils.isCompositeComponent(element)).toBeTruthy()
 
   it 'should create a li with two spans', ->
-    li = TestUtils.findRenderedDOMComponentWithTag listItem, 'li'
+    li = TestUtils.findRenderedDOMComponentWithTag element, 'li'
     spans = TestUtils.scryRenderedDOMComponentsWithTag li, 'span'
     expect(spans.length).toBe 2
 
@@ -38,12 +38,15 @@ describe 'ListItem', ->
 
   it 'should get comments when the descendants span is clicked', ->
     Actions = require '../../actions/Actions.coffee'
-    li = TestUtils.findRenderedDOMComponentWithTag listItem, 'li'
+    li = TestUtils.findRenderedDOMComponentWithTag element, 'li'
     spans = TestUtils.scryRenderedDOMComponentsWithTag li, 'span'
     comments = React.findDOMNode(spans[1])
     TestUtils.Simulate.click(comments)
     expect(Actions.clickComments).toBeCalledWith item.get('kids')
 
-
-
-
+  it 'should display comments', ->
+    Comments = require '../Comments.coffee'
+    expect(Comments.mock.calls[0][0]).toEqual {
+      comments: undefined
+      parentId: 1
+    }

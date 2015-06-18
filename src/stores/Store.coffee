@@ -12,10 +12,10 @@ _comments = new Immutable.Map()
 
 updateItem = (item) ->
   if item.parent
-    if not _comments.get(item.parent)
+    if not _comments.has(item.parent)
       _comments = _comments.set(item.parent, new Immutable.List())
-      newCommentList = _comments.get(item.parent).push(item)
-      _comments = _comments.set(item.parent, newCommentList)
+    newCommentList = _comments.get(item.parent).push(new Immutable.Map(item))
+    _comments = _comments.set(item.parent, newCommentList)
   else
     _items = _items.set(item.id, new Immutable.Map(item))
 
@@ -26,8 +26,8 @@ Store = _.assign {}, EventEmitter.prototype,
       b = itemB.get('descendants') * itemB.get('score')
       b - a
 
-  getComments: (id) ->
-    _comments.get(id)
+  getComments: ->
+    _comments
 
   emitChange: ->
     @emit(CHANGE_EVENT)

@@ -32,6 +32,8 @@ Actions =
             type: Constants.CREATE_ITEM
             item: item
           }
+          if item.kids?
+            Actions.clickComments(item.kids)
       .done()
 
 module.exports = Actions

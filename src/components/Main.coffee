@@ -3,12 +3,13 @@ _ = require 'lodash'
 Store = require '../stores/Store.coffee'
 List = require './List.coffee'
 
-getItems = ->
+getStates = ->
   items: Store.getItems()
+  comments: Store.getComments()
 
 Main = React.createClass
   getInitialState: ->
-    getItems()
+    getStates()
 
   componentDidMount: ->
     Store.addChangeListener @_onChange
@@ -17,9 +18,9 @@ Main = React.createClass
     Store.removeChangeListener @_onChange
 
   render: ->
-    React.createElement List, {items: @state.items}
+    React.createElement List, {items: @state.items, comments: @state.comments}
 
   _onChange: ->
-    @setState getItems()
+    @setState getStates()
 
 module.exports = Main

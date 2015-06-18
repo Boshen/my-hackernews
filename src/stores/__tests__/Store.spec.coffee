@@ -74,3 +74,20 @@ describe 'Store', ->
       createItem(item4)
       items = Store.getItems().toJS()
       expect(items).toEqual [item2, item3, item1, item4]
+
+    it 'should add comments', ->
+      item1 = id: 2, parent: 1
+      item2 = id: 3, parent: 1
+      item3 = id: 4, parent: 3
+
+      createItem(item1)
+      comments = Store.getComments()
+      expect(comments.get(item1.parent).toJS()).toEqual [item1]
+
+      createItem(item2)
+      comments = Store.getComments()
+      expect(comments.get(item2.parent).toJS()).toEqual [item1, item2]
+
+      createItem(item3)
+      comments = Store.getComments()
+      expect(comments.get(item3.parent).toJS()).toEqual [item3]

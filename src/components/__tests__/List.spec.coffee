@@ -7,7 +7,7 @@ describe 'List', ->
   TestUtils = React.addons.TestUtils
   List = ListItem = null
 
-  list = items = null
+  element = items = null
 
   beforeEach ->
     List = require '../List.coffee'
@@ -17,13 +17,13 @@ describe 'List', ->
       new Immutable.Map {id: 1}
       new Immutable.Map {id: 2}
     ]
-    list = TestUtils.renderIntoDocument React.createElement(List, {items: items})
+    element = TestUtils.renderIntoDocument React.createElement(List, {items: items})
 
   it 'should exists', ->
-    expect(TestUtils.isCompositeComponent(list)).toBeTruthy()
+    expect(TestUtils.isCompositeComponent(element)).toBeTruthy()
 
-  it 'should create an list', ->
-    ol = TestUtils.findRenderedDOMComponentWithTag list, 'ol'
+  it 'should create a list', ->
+    ol = TestUtils.findRenderedDOMComponentWithTag element, 'ol'
     expect(ol.getDOMNode().children.length).toBe 2
     expect(ListItem.mock.calls.length).toEqual 2
     ListItem.mock.calls.forEach (call, i) ->

@@ -6,5 +6,4 @@ describe 'Constants', ->
   it 'should define actions', ->
     expect(Constants).toEqual {
       CREATE_ITEM: 'CREATE_ITEM'
-      CREATE_COMMENT: 'CREATE_COMMENT'
     }

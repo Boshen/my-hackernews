@@ -1,3 +1,2 @@
 module.exports =
   CREATE_ITEM: 'CREATE_ITEM'
-  CREATE_COMMENT: 'CREATE_COMMENT'

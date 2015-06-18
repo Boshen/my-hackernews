@@ -1,13 +1,28 @@
 li {
+  list-style: none;
+}
+
+li .title {
   display: flex;
   padding: 5px;
 }
 
-li span:first-child {
+li .title span:first-child {
   flex: 5;
 }
 
-li span:last-child {
+li .title span:last-child {
   flex: 1;
   text-align: center;
+  cursor: pointer;
+}
+
+.comments {
+  padding: 10px;
+  margin-left: 20px;
+  border-left: 1px solid black;
+}
+
+.comment {
+  padding: 10px;
 }
