@@ -2,6 +2,10 @@ React = require 'react'
 PureRenderMixin = require('react/addons').addons.PureRenderMixin
 Immutable = require 'immutable'
 
+Mui = require 'material-ui'
+RaisedButton = Mui.RaisedButton
+
+
 Actions = require '../actions/Actions.coffee'
 Comments = require './Comments.coffee'
 
@@ -19,7 +23,7 @@ ListItem = React.createClass
       React.createElement 'div', {className: 'title'},
         React.createElement 'span', null,
           React.createElement 'a', {href: item.get('url')}, item.get('title')
-        React.createElement 'span', {onClick: @_clickComments}, item.get('descendants')
+        React.createElement RaisedButton, {label: item.get('descendants') or '0', onClick: @_clickComments}
       React.createElement Comments, {comments: @props.comments, parentId: item.get('id')}
 
   _clickComments: ->

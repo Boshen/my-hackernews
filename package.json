@@ -15,8 +15,10 @@
     "flux": "^2.0.3",
     "immutable": "^3.7.3",
     "lodash": "^3.9.3",
+    "material-ui": "^0.9.1",
     "q": "^1.4.1",
-    "react": "^0.13.3"
+    "react": "^0.13.3",
+    "react-tap-event-plugin": "^0.1.7"
   },
   "devDependencies": {
     "browser-sync": "^2.7.6",

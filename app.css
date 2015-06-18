@@ -1,10 +1,21 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+}
+
+ol {
+  margin: 0;
+  padding: 10px 50px;
+}
+
 li {
   list-style: none;
 }
 
 li .title {
   display: flex;
-  padding: 5px;
+  margin: 10px 0;
+  align-items: center;
 }
 
 li .title span:first-child {
@@ -18,9 +29,7 @@ li .title span:last-child {
 }
 
 .comments {
-  padding: 10px;
-  margin-left: 20px;
-  border-left: 1px solid black;
+  padding: 0 0 5px 5px;
 }
 
 .comment {
