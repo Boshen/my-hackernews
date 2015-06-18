@@ -15,11 +15,17 @@ ListItem = React.createClass
   render: ->
     item = @props.item
 
+    descendants = item.get('descendants')
+    commentButton = if descendants > 0
+      React.createElement 'button', {className: 'btn-comment', onClick: @_clickComments}, descendants
+    else
+      null
+
     React.createElement 'li', null,
       React.createElement 'div', {className: 'title'},
         React.createElement 'span', null,
           React.createElement 'a', {href: item.get('url')}, item.get('title')
-        React.createElement 'span', {onClick: @_clickComments}, item.get('descendants')
+        React.createElement 'span', null, commentButton
       React.createElement Comments, {comments: @props.comments, parentId: item.get('id')}
 
   _clickComments: ->

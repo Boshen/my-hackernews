@@ -36,13 +36,17 @@ describe 'ListItem', ->
 
     expect(spans[1].getDOMNode().textContent).toBe item.get('descendants').toString()
 
-  it 'should get comments when the descendants span is clicked', ->
+  it 'should get comments when the descendants button is clicked', ->
     Actions = require '../../actions/Actions.coffee'
-    li = TestUtils.findRenderedDOMComponentWithTag element, 'li'
-    spans = TestUtils.scryRenderedDOMComponentsWithTag li, 'span'
-    comments = React.findDOMNode(spans[1])
-    TestUtils.Simulate.click(comments)
+    button = TestUtils.findRenderedDOMComponentWithTag element, 'button'
+    TestUtils.Simulate.click(React.findDOMNode(button))
     expect(Actions.clickComments).toBeCalledWith item.get('kids')
+
+  xit 'should not show comments button if it does not have comments', ->
+    # TODO: how do I test if an element does not exists?
+    item = new Immutable.Map { id: 1 }
+    element = TestUtils.renderIntoDocument React.createElement(ListItem, {item: item})
+    expect(TestUtils.findRenderedDOMComponentWithTag(element, 'button')).toThrow()
 
   it 'should display comments', ->
     Comments = require '../Comments.coffee'

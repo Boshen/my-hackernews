@@ -13,8 +13,6 @@ li .title span:first-child {
 
 li .title span:last-child {
   flex: 1;
-  text-align: center;
-  cursor: pointer;
 }
 
 .comments {
@@ -25,4 +23,8 @@ li .title span:last-child {
 
 .comment {
   padding: 10px;
+}
+
+.btn-comment {
+  width: 50%;
 }
