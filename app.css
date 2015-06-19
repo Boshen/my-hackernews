@@ -2,6 +2,10 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+main {
+  margin: 50px 0;
+}
+
 ol {
   margin: 0 50px;
   padding: 0;
@@ -9,11 +13,11 @@ ol {
 
 li {
   list-style: none;
+  margin: 10px 0 0 0;
 }
 
 li .title {
   display: flex;
-  padding: 5px;
 }
 
 li .title span:first-child {
@@ -26,16 +30,34 @@ li .title span:last-child {
 }
 
 .comments {
-  padding: 10px;
-  margin-left: 20px;
+  margin: 0 0 0 5px;
 }
 
 .comment {
   padding: 10px;
-  border-left: 1px solid red;
+  border-left: 5px solid black;
   margin: 5px 0;
 }
 
 .btn-comment {
+  height: 25px;
   width: 50%;
+  text-decoration: none;
+  border-radius: 2px;
+  border: 0;
+  border-color: #ccc;
+  cursor: pointer;
+  background-color: transparent;
+  -webkit-user-select: none;
+  outline: none;
+  box-shadow: 0 1px 6px 0 rgba(0,0,0,.12),0 1px 6px 0 rgba(0,0,0,.12);
+  transition: box-shadow .28s cubic-bezier(.4,0,.2,1);
+}
+
+.btn-comment:active {
+  box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
+}
+
+a {
+  text-decoration: none;
 }
