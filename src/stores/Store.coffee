@@ -20,6 +20,12 @@ updateComments = (comments) ->
     newCommentList = _comments.get(comment.parent).push(new Immutable.Map(comment))
     _comments = _comments.set(comment.parent, newCommentList)
 
+deleteComments = (id) ->
+  if _comments.has(id)
+    _comments.get(id).forEach (comment) ->
+      deleteComments(comment.get('id'))
+  _comments = _comments.delete(id)
+
 Store = _.assign {}, EventEmitter.prototype,
   getItems: ->
     _items.toList().sort (itemA, itemB) ->
@@ -48,6 +54,10 @@ Dispatcher.register (payload) ->
 
     when Constants.CREATE_COMMENTS
       updateComments(payload.comments)
+      Store.emitChange()
+
+    when Constants.DELETE_COMMENTS
+      deleteComments(payload.id)
       Store.emitChange()
 
 module.exports = Store

@@ -46,3 +46,13 @@ describe 'Actions', ->
               #type: Constants.CREATE_COMMENT
               #comment: comments[i]
             #}
+            #
+
+  describe 'delete comments', ->
+    it 'should delete all comments and its children', ->
+      id = 1
+      Actions.deleteComments(id)
+      expect(Dispatcher.dispatch).toBeCalledWith {
+        type: Constants.DELETE_COMMENTS
+        id: id
+      }

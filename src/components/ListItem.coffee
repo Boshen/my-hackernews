@@ -29,6 +29,9 @@ ListItem = React.createClass
       React.createElement Comments, {comments: @props.comments, parentId: item.get('id')}
 
   _clickComments: ->
-    Actions.clickComments @props.item.get('kids')
+    if @props.comments and @props.comments.get(@props.item.get('id'))
+      Actions.deleteComments @props.item.get('id')
+    else
+      Actions.clickComments @props.item.get('kids')
 
 module.exports = ListItem

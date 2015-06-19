@@ -41,4 +41,10 @@ Actions =
         }
       .done()
 
+  deleteComments: (id) ->
+    Dispatcher.dispatch {
+      type: Constants.DELETE_COMMENTS
+      id: id
+    }
+
 module.exports = Actions

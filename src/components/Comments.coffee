@@ -7,7 +7,7 @@ Comments = React.createClass
     parentId: React.PropTypes.number.isRequired
 
   shouldComponentUpdate: (nextProps) ->
-    nextProps.comments?.has(@props.parentId)
+    @props.comments?.get(@props.parentId) isnt nextProps.comments?.get(@props.parentId)
 
   render: ->
     return null unless @props.comments and @props.comments.has(@props.parentId)

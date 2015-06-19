@@ -5,12 +5,13 @@ describe 'ListItem', ->
   React = require 'react/addons'
   Immutable = require 'immutable'
   TestUtils = React.addons.TestUtils
-  ListItem = null
+  ListItem = Actions = null
 
   item = element = null
 
   beforeEach ->
     ListItem = require '../ListItem.coffee'
+    Actions = require '../../actions/Actions.coffee'
 
     item = new Immutable.Map {
       id: 1
@@ -36,8 +37,7 @@ describe 'ListItem', ->
 
     expect(spans[1].getDOMNode().textContent).toBe item.get('descendants').toString()
 
-  it 'should get comments when the descendants button is clicked', ->
-    Actions = require '../../actions/Actions.coffee'
+  it 'should get comments when the comments button is clicked', ->
     button = TestUtils.findRenderedDOMComponentWithTag element, 'button'
     TestUtils.Simulate.click(React.findDOMNode(button))
     expect(Actions.clickComments).toBeCalledWith item.get('kids')
@@ -54,3 +54,11 @@ describe 'ListItem', ->
       comments: undefined
       parentId: 1
     }
+
+  xit 'should delete comments when the comments button is clicked again', ->
+    button = TestUtils.findRenderedDOMComponentWithTag element, 'button'
+    TestUtils.Simulate.click(React.findDOMNode(button))
+    expect(Actions.clickComments).toBeCalledWith item.get('kids')
+    # TODO: how do I update the props passed into the component here?
+    TestUtils.Simulate.click(React.findDOMNode(button))
+    expect(Actions.deleteComments).toBeCalledWith item.get('id')

@@ -9,11 +9,25 @@ describe 'Store', ->
   Store = null
 
   callback = null
+  createComments = null
+  deleteComments = null
 
   beforeEach ->
     Dispatcher = require '../../dispatcher/Dispatcher.coffee'
     Store = require '../Store.coffee'
     callback = Dispatcher.register.mock.calls[0][0]
+
+    createComments = (comments) ->
+      callback {
+        type: Constants.CREATE_COMMENTS
+        comments: comments
+      }
+
+    deleteComments = (id) ->
+      callback {
+        type: Constants.DELETE_COMMENTS
+        id: id
+      }
 
   describe 'CREATE_ITEM', ->
     createItem = null
@@ -76,15 +90,6 @@ describe 'Store', ->
       expect(items).toEqual [item2, item3, item1, item4]
 
   describe 'CREATE_COMMENTS', ->
-    createComments = null
-
-    beforeEach ->
-      createComments = (comments) ->
-        callback {
-          type: Constants.CREATE_COMMENTS
-          comments: comments
-        }
-
     it 'should add comments', ->
       item1 = id: 2, parent: 1
       item2 = id: 3, parent: 1
@@ -96,4 +101,19 @@ describe 'Store', ->
       expect(Store.getComments().toJS()).toEqual {
         1: [item1, item2]
         3: [item3]
+      }
+
+  describe 'DELETE_COMMENTS', ->
+    it 'should delete comments and all its children', ->
+      createComments [
+        {id: 2, parent: 1}
+        {id: 10, parent: 2}
+        {id: 11, parent: 2}
+        {id: 20, parent: 21}
+      ]
+
+      deleteComments(1)
+
+      expect(Store.getComments().toJS()).toEqual {
+        21: [{id: 20, parent: 21}]
       }
