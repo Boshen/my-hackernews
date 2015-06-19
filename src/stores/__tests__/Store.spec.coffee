@@ -75,19 +75,25 @@ describe 'Store', ->
       items = Store.getItems().toJS()
       expect(items).toEqual [item2, item3, item1, item4]
 
+  describe 'CREATE_COMMENTS', ->
+    createComments = null
+
+    beforeEach ->
+      createComments = (comments) ->
+        callback {
+          type: Constants.CREATE_COMMENTS
+          comments: comments
+        }
+
     it 'should add comments', ->
       item1 = id: 2, parent: 1
       item2 = id: 3, parent: 1
       item3 = id: 4, parent: 3
 
-      createItem(item1)
-      comments = Store.getComments()
-      expect(comments.get(item1.parent).toJS()).toEqual [item1]
+      comments = [item1, item2, item3]
+      createComments(comments)
 
-      createItem(item2)
-      comments = Store.getComments()
-      expect(comments.get(item2.parent).toJS()).toEqual [item1, item2]
-
-      createItem(item3)
-      comments = Store.getComments()
-      expect(comments.get(item3.parent).toJS()).toEqual [item3]
+      expect(Store.getComments().toJS()).toEqual {
+        1: [item1, item2]
+        3: [item3]
+      }

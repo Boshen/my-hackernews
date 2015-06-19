@@ -5,6 +5,16 @@ Dispatcher = require '../dispatcher/Dispatcher.coffee'
 Constants = require '../constants/Constants.coffee'
 HackerNewsApi = require '../utils/HackerNewsApi.coffee'
 
+getComments = (ids, comments) ->
+  Q.all _.map ids, (id) ->
+    HackerNewsApi.get id
+      .then (item) ->
+        comments.push(item)
+        if item.kids?
+          getComments(item.kids, comments)
+        else
+          Q.when()
+
 Actions =
   init: ->
     cb = (id) ->
@@ -13,7 +23,7 @@ Actions =
           Actions.createItem item
 
     HackerNewsApi.getTopStories cb
-    HackerNewsApi.getNewStories cb
+    #HackerNewsApi.getNewStories cb
 
   createItem: (item) ->
     Dispatcher.dispatch {
@@ -22,18 +32,13 @@ Actions =
     }
 
   clickComments: (ids) ->
-    promises = _.map ids, (id) ->
-      HackerNewsApi.get id
-
-    Q.all promises
-      .then (items) ->
-        _.each items, (item) ->
-          Dispatcher.dispatch {
-            type: Constants.CREATE_ITEM
-            item: item
-          }
-          if item.kids?
-            Actions.clickComments(item.kids)
+    comments = []
+    getComments(ids, comments)
+      .then ->
+        Dispatcher.dispatch {
+          type: Constants.CREATE_COMMENTS
+          comments: comments
+        }
       .done()
 
 module.exports = Actions

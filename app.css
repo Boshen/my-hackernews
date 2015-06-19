@@ -18,11 +18,12 @@ li .title span:last-child {
 .comments {
   padding: 10px;
   margin-left: 20px;
-  border-left: 1px solid black;
 }
 
 .comment {
   padding: 10px;
+  border-left: 1px solid red;
+  margin: 5px 0;
 }
 
 .btn-comment {

@@ -11,13 +11,14 @@ _items = new Immutable.Map()
 _comments = new Immutable.Map()
 
 updateItem = (item) ->
-  if item.parent
-    if not _comments.has(item.parent)
-      _comments = _comments.set(item.parent, new Immutable.List())
-    newCommentList = _comments.get(item.parent).push(new Immutable.Map(item))
-    _comments = _comments.set(item.parent, newCommentList)
-  else
-    _items = _items.set(item.id, new Immutable.Map(item))
+  _items = _items.set(item.id, new Immutable.Map(item))
+
+updateComments = (comments) ->
+  comments.forEach (comment) ->
+    if not _comments.has(comment.parent)
+      _comments = _comments.set(comment.parent, new Immutable.List())
+    newCommentList = _comments.get(comment.parent).push(new Immutable.Map(comment))
+    _comments = _comments.set(comment.parent, newCommentList)
 
 Store = _.assign {}, EventEmitter.prototype,
   getItems: ->
@@ -43,6 +44,10 @@ Dispatcher.register (payload) ->
 
     when Constants.CREATE_ITEM
       updateItem(payload.item)
+      Store.emitChange()
+
+    when Constants.CREATE_COMMENTS
+      updateComments(payload.comments)
       Store.emitChange()
 
 module.exports = Store
