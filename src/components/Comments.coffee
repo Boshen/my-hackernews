@@ -1,13 +1,13 @@
 React = require 'react'
-PureRenderMixin = require('react/addons').addons.PureRenderMixin
 Immutable = require 'immutable'
 
 Comments = React.createClass
-  mixins: [PureRenderMixin]
-
   propTypes:
     comments: React.PropTypes.instanceOf(Immutable.Map)
     parentId: React.PropTypes.number.isRequired
+
+  shouldComponentUpdate: (nextProps) ->
+    nextProps.comments?.has(@props.parentId)
 
   render: ->
     return null unless @props.comments and @props.comments.has(@props.parentId)
