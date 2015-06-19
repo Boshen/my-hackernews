@@ -26,7 +26,7 @@ describe 'Actions', ->
       ids = [1, 2, 3]
       comments = [ {id: 100, kids: [1]}, {id: 101, kids: [2]}, {id: 102, kids: [3]} ]
 
-      HackerNewsApi.get.mockImplementation (id, i)->
+      HackerNewsApi.get.mockImplementation (id, i) ->
         Q.when comments[i]
 
       Q.when()
@@ -37,11 +37,11 @@ describe 'Actions', ->
       #Actions.clickComments(ids)
         #.then ->
           #expect(HackerNewsApi.get.mock.calls.length).toBe ids.length
-          #HackerNewsApi.get.mock.calls.forEach (call, i)->
+          #HackerNewsApi.get.mock.calls.forEach (call, i) ->
             #expect(call[0]).toBe ids[i]
 
           #expect(Dispatcher.dispatch.mock.calls.length).toBe ids.length
-          #Dispatcher.dispatcher.mock.calls.forEach (call, i)->
+          #Dispatcher.dispatcher.mock.calls.forEach (call, i) ->
             #expect(call).toEqual {
               #type: Constants.CREATE_COMMENT
               #comment: comments[i]

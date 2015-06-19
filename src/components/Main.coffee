@@ -1,5 +1,4 @@
 React = require 'react'
-_ = require 'lodash'
 Store = require '../stores/Store.coffee'
 List = require './List.coffee'
 

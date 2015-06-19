@@ -50,5 +50,5 @@ describe 'Comments', ->
 
     allComments = TestUtils.scryRenderedDOMComponentsWithClass(element, 'comment')
     expect(allComments.length).toBe 2
-    allComments.forEach (comment, i)->
+    allComments.forEach (comment, i) ->
       expect(React.findDOMNode(comment).textContent).toBe 'test ' + (i + 1)
