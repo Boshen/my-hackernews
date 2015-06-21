@@ -1,10 +1,10 @@
 React = require 'react'
-Store = require '../stores/Store.coffee'
-List = require './List.coffee'
+StoryStore = require '../stores/StoryStore.coffee'
 Actions = require '../actions/Actions.coffee'
+List = require '../components/List.coffee'
 
 getStates = ->
-  items: Store.getItems()
+  items: StoryStore.getItems()
 
 Main = React.createClass
   getInitialState: ->
@@ -12,10 +12,10 @@ Main = React.createClass
 
   componentDidMount: ->
     Actions.getTopStories()
-    Store.addChangeListener @_onChange
+    StoryStore.addChangeListener @_onChange
 
   componentWillUnmount: ->
-    Store.removeChangeListener @_onChange
+    StoryStore.removeChangeListener @_onChange
 
   render: ->
     React.createElement List, {items: @state.items}

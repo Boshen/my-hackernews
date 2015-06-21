@@ -3,7 +3,6 @@ PureRenderMixin = require('react/addons').addons.PureRenderMixin
 Immutable = require 'immutable'
 Link = require('react-router').Link
 
-
 Actions = require '../actions/Actions.coffee'
 
 ListItem = React.createClass

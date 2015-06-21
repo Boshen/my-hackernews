@@ -5,13 +5,9 @@ _ = require 'lodash'
 Dispatcher = require '../dispatcher/Dispatcher.coffee'
 Constants = require '../constants/Constants.coffee'
 
-CHANGE_EVENT = 'change'
+CHANGE_EVENT = 'change_comment'
 
-_items = new Immutable.Map()
 _comments = new Immutable.Map()
-
-updateItem = (item) ->
-  _items = _items.set(item.id, new Immutable.Map(item))
 
 updateComments = (comments) ->
   comments.forEach (comment) ->
@@ -26,16 +22,7 @@ deleteComments = (id) ->
       deleteComments(comment.get('id'))
   _comments = _comments.delete(id)
 
-Store = _.assign {}, EventEmitter.prototype,
-  getItems: ->
-    _items.toList().sort (itemA, itemB) ->
-      a = itemA.get('descendants') * itemA.get('score')
-      b = itemB.get('descendants') * itemB.get('score')
-      b - a
-
-  getItem: (id) ->
-    _items.get(id)
-
+CommentStore = _.assign {}, EventEmitter.prototype,
   getComments: ->
     _comments
 
@@ -51,16 +38,12 @@ Store = _.assign {}, EventEmitter.prototype,
 Dispatcher.register (payload) ->
   switch payload.type
 
-    when Constants.CREATE_ITEM
-      updateItem(payload.item)
-      Store.emitChange()
-
     when Constants.CREATE_COMMENTS
       updateComments(payload.comments)
-      Store.emitChange()
+      CommentStore.emitChange()
 
     when Constants.DELETE_COMMENTS
       deleteComments(payload.id)
-      Store.emitChange()
+      CommentStore.emitChange()
 
-module.exports = Store
+module.exports = CommentStore
