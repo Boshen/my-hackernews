@@ -3,7 +3,7 @@
 Built with
 * React.js
 * Flux
-* Immutable.s
+* Immutable.js
 * Hacker News API
 
 Inspired by https://github.com/insin/react-hn
