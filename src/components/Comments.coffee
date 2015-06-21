@@ -3,7 +3,7 @@ Immutable = require 'immutable'
 
 Comments = React.createClass
   propTypes:
-    comments: React.PropTypes.instanceOf(Immutable.Map)
+    komments: React.PropTypes.instanceOf(Immutable.Map)
     parentId: React.PropTypes.number.isRequired
 
   shouldComponentUpdate: (nextProps) ->

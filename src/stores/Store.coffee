@@ -33,6 +33,9 @@ Store = _.assign {}, EventEmitter.prototype,
       b = itemB.get('descendants') * itemB.get('score')
       b - a
 
+  getItem: (id) ->
+    _items.get(id)
+
   getComments: ->
     _comments
 

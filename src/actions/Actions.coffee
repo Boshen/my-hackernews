@@ -16,14 +16,13 @@ getComments = (ids, comments) ->
           Q.when()
 
 Actions =
-  init: ->
-    cb = (id) ->
-      HackerNewsApi.get id
-        .then (item) ->
-          Actions.createItem item
-
-    HackerNewsApi.getTopStories cb
-    #HackerNewsApi.getNewStories cb
+  getTopStories: ->
+    HackerNewsApi.getTopStories()
+      .then (stories) ->
+        _.each stories, (storyId) ->
+          HackerNewsApi.get storyId
+            .then (item) ->
+              Actions.createItem item
 
   createItem: (item) ->
     Dispatcher.dispatch {

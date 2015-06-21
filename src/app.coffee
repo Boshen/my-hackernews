@@ -1,7 +1,20 @@
 React = require 'react'
+Router = require 'react-router'
+Route = Router.Route
+RouteHandler = Router.RouteHandler
+DefaultRoute = Router.DefaultRoute
+
 Main = require './components/Main.coffee'
-Actions = require './actions/Actions.coffee'
+Story = require './components/Story.coffee'
 
-Actions.init()
+App = React.createClass
+  render: ->
+    React.createElement 'main', null,
+      React.createElement RouteHandler, null
 
-React.render React.createElement(Main, null), document.getElementById('main')
+routes = React.createElement Route, {path: '/', handler: App},
+    React.createElement DefaultRoute, {handler: Main}
+    React.createElement Route, {name: 'story', path: 'story/:id', handler: Story}
+
+Router.run routes, Router.HashLocation, (Root) ->
+  React.render(React.createElement(Root, null), document.body)

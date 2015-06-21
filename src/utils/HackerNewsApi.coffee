@@ -3,19 +3,16 @@ Q = require 'q'
 
 api = new Firebase 'https://hacker-news.firebaseio.com/v0'
 
-getRef = (ref, cb) ->
-  ref.on 'child_changed', (snapshot) ->
-    cb snapshot.val()
-
-  ref.on 'child_added', (snapshot) ->
-    cb snapshot.val()
-
 HackerNewsApi =
-  getTopStories: (cb) ->
-    getRef api.child('topstories').limitToFirst(50), cb
-
-  getNewStories: (cb) ->
-    getRef api.child('newstories').limitToFirst(10), cb
+  getTopStories: ->
+    deferred = Q.defer()
+    api.child('topstories').limitToFirst(10).once 'value', (snapshot) ->
+      item = snapshot.val()
+      if item
+        deferred.resolve item
+      else
+        deferred.reject()
+    deferred.promise
 
   get: (id) ->
     deferred = Q.defer()
