@@ -20,7 +20,10 @@ Comments = React.createClass
   propTypes:
     komments: React.PropTypes.instanceOf(Immutable.Map)
     parentId: React.PropTypes.number.isRequired
-    depth: React.PropTypes.number.isRequired
+    depth: React.PropTypes.number
+
+  getInitialState: ->
+    depth: @props.depth or 0
 
   shouldComponentUpdate: (nextProps) ->
     @props.comments?.get(@props.parentId) isnt nextProps.comments?.get(@props.parentId)
@@ -31,7 +34,7 @@ Comments = React.createClass
     React.createElement 'div', {className: 'comments'}, @props.comments.get(@props.parentId).map (comment) =>
       return null if comment.get('deleted')
       React.createElement 'div', {key: comment.get('id')},
-        React.createElement 'div', {style: commentStyle(@props.depth), className: 'comment', dangerouslySetInnerHTML: {__html: comment.get('text')}}, null
-        React.createElement Comments, {comments: @props.comments, parentId: comment.get('id'), depth: @props.depth + 1}
+        React.createElement 'div', {style: commentStyle(@state.depth), className: 'comment', dangerouslySetInnerHTML: {__html: comment.get('text')}}, null
+        React.createElement Comments, {comments: @props.comments, parentId: comment.get('id'), depth: @state.depth + 1}
 
 module.exports = Comments

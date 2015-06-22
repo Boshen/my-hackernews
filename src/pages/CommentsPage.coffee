@@ -22,7 +22,7 @@ Story = React.createClass
     CommentStore.removeChangeListener @_onChange
 
   render: ->
-    React.createElement Comments, {comments: @state.comments, parentId: @state.id, depth: 0}
+    React.createElement Comments, {comments: @state.comments, parentId: @state.id}
 
   _onChange: ->
     @setState getStates()
