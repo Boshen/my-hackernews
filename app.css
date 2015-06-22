@@ -34,12 +34,6 @@ li .title span:last-child {
   margin: 0 0 0 5px;
 }
 
-.comment {
-  padding: 10px;
-  border-left: 5px solid black;
-  margin: 5px 0;
-}
-
 .btn-comment {
   height: 25px;
   width: 50%;
