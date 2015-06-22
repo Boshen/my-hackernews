@@ -11,7 +11,7 @@ HackerNewsApi =
     init() if not api
 
     deferred = Q.defer()
-    api.child('topstories').limitToFirst(10).once 'value', (snapshot) ->
+    api.child('topstories').limitToFirst(50).once 'value', (snapshot) ->
       item = snapshot.val()
       if item
         deferred.resolve item
