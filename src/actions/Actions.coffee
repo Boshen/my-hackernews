@@ -30,20 +30,32 @@ Actions =
       item: item
     }
 
-  clickComments: (ids) ->
-    comments = []
-    getComments(ids, comments)
-      .then ->
-        Dispatcher.dispatch {
-          type: Constants.CREATE_COMMENTS
-          comments: comments
-        }
-      .done()
+  clickComments: (itemOrId) ->
+    promise =
+      if _.isNumber(itemOrId)
+        HackerNewsApi.get(itemOrId)
+          .then (item) ->
+            Dispatcher.dispatch {
+              type: Constants.CREATE_ITEM
+              item: item
+            }
+            Q.when(item)
+      else
+        Q.when(itemOrId)
 
-  deleteComments: (id) ->
+    promise.then (item) ->
+      comments = []
+      ids = item.kids or item.get('kids')
+      getComments(ids, comments)
+        .then ->
+          Dispatcher.dispatch {
+            type: Constants.CREATE_COMMENTS
+            comments: comments
+          }
+
+  deleteComments: ->
     Dispatcher.dispatch {
       type: Constants.DELETE_COMMENTS
-      id: id
     }
 
 module.exports = Actions

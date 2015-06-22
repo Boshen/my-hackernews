@@ -14,10 +14,11 @@ Story = React.createClass
     states
 
   componentDidMount: ->
-    Actions.clickComments(StoryStore.getItem(@state.id).get('kids'))
+    Actions.clickComments(StoryStore.getItem(@state.id))
     CommentStore.addChangeListener @_onChange
 
   componentWillUnmount: ->
+    Actions.deleteComments()
     CommentStore.removeChangeListener @_onChange
 
   render: ->

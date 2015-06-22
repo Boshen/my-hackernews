@@ -20,7 +20,7 @@ StoryStore = _.assign {}, EventEmitter.prototype,
       b - a
 
   getItem: (id) ->
-    _items.get(id)
+    if _items.has(id) then _items.get(id) else id
 
   emitChange: ->
     @emit(CHANGE_EVENT)
