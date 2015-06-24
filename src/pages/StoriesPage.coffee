@@ -1,7 +1,7 @@
 React = require 'react'
 StoryStore = require '../stores/StoryStore.coffee'
 Actions = require '../actions/Actions.coffee'
-List = require '../components/List.coffee'
+List = React.createFactory require '../components/List.coffee'
 
 getStates = ->
   items: StoryStore.getItems()
@@ -18,7 +18,7 @@ Main = React.createClass
     StoryStore.removeChangeListener @_onChange
 
   render: ->
-    React.createElement List, {items: @state.items}
+    List items: @state.items
 
   _onChange: ->
     @setState getStates()

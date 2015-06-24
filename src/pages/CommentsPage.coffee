@@ -2,7 +2,7 @@ React = require 'react'
 CommentStore = require '../stores/CommentStore.coffee'
 StoryStore = require '../stores/StoryStore.coffee'
 Actions = require '../actions/Actions.coffee'
-Comments = require '../components/Comments.coffee'
+Comments = React.createFactory require '../components/Comments.coffee'
 
 getStates = ->
   comments: CommentStore.getComments()
@@ -22,7 +22,7 @@ Story = React.createClass
     CommentStore.removeChangeListener @_onChange
 
   render: ->
-    React.createElement Comments, {comments: @state.comments, parentId: @state.id}
+    Comments {comments: @state.comments, parentId: @state.id}
 
   _onChange: ->
     @setState getStates()

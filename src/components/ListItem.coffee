@@ -5,6 +5,8 @@ Link = require('react-router').Link
 
 Actions = require '../actions/Actions.coffee'
 
+[li, div, span, a] = ['li', 'div', 'span', 'a'].map((_) -> React.DOM[_])
+
 ListItem = React.createClass
   mixins: [PureRenderMixin]
 
@@ -21,10 +23,10 @@ ListItem = React.createClass
     else
       null
 
-    React.createElement 'li', null,
-      React.createElement 'div', {className: 'title'},
-        React.createElement 'span', null,
-          React.createElement 'a', {href: item.get('url')}, item.get('title')
-        React.createElement 'span', null, commentButton
+    li null,
+      div className: 'title',
+        span null,
+          a href: item.get('url'), item.get('title')
+        span null, commentButton
 
 module.exports = ListItem

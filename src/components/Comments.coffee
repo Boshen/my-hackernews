@@ -1,6 +1,8 @@
 React = require 'react'
 Immutable = require 'immutable'
 
+div = React.DOM.div
+
 colors = [
   '#FF5722'
   '#303F9F'
@@ -12,7 +14,7 @@ colors = [
 
 commentStyle = (index) ->
   padding: '10px'
-  margin: '5px 0'
+  margin: '20px'
   borderLeft: '5px solid'
   borderLeftColor: colors[index % colors.length]
 
@@ -31,10 +33,10 @@ Comments = React.createClass
   render: ->
     return null unless @props.comments and @props.comments.has(@props.parentId)
 
-    React.createElement 'div', {className: 'comments'}, @props.comments.get(@props.parentId).map (comment) =>
+    div className: 'comments', @props.comments.get(@props.parentId).map (comment) =>
       return null if comment.get('deleted')
-      React.createElement 'div', {key: comment.get('id')},
-        React.createElement 'div', {style: commentStyle(@state.depth), className: 'comment', dangerouslySetInnerHTML: {__html: comment.get('text')}}, null
+      div key: comment.get('id'),
+        div {style: commentStyle(@state.depth), className: 'comment', dangerouslySetInnerHTML: {__html: comment.get('text')}}
         React.createElement Comments, {comments: @props.comments, parentId: comment.get('id'), depth: @state.depth + 1}
 
 module.exports = Comments
