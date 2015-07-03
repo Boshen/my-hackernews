@@ -20,7 +20,7 @@ commentStyle = (index) ->
 
 Comments = React.createClass
   propTypes:
-    komments: React.PropTypes.instanceOf(Immutable.Map)
+    comments: React.PropTypes.instanceOf(Immutable.Map)
     parentId: React.PropTypes.number.isRequired
     depth: React.PropTypes.number
 
